@@ -1,0 +1,227 @@
+[
+    {
+        "label": "pytest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytest",
+        "description": "pytest",
+        "detail": "pytest",
+        "documentation": {}
+    },
+    {
+        "label": "tempfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "unittest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unittest",
+        "description": "unittest",
+        "detail": "unittest",
+        "documentation": {}
+    },
+    {
+        "label": "tmp_file",
+        "kind": 2,
+        "importPath": "tests.test_accessories",
+        "description": "tests.test_accessories",
+        "peekOfCode": "def tmp_file():\n    def create(): #cria um arquivo temporário\n        temp = tempfile.NamedTemporaryFile(delete=False)\n        return temp.name\n    return create\ndef test_file(tmp_file):\n    path = tmp_file() #cria um arquivo temporário e retorna o caminho dele.\n    assert os.path.exists(path) # Se o arquivo existe, a asserção passa; caso contrário, o teste falha.",
+        "detail": "tests.test_accessories",
+        "documentation": {}
+    },
+    {
+        "label": "test_file",
+        "kind": 2,
+        "importPath": "tests.test_accessories",
+        "description": "tests.test_accessories",
+        "peekOfCode": "def test_file(tmp_file):\n    path = tmp_file() #cria um arquivo temporário e retorna o caminho dele.\n    assert os.path.exists(path) # Se o arquivo existe, a asserção passa; caso contrário, o teste falha.",
+        "detail": "tests.test_accessories",
+        "documentation": {}
+    },
+    {
+        "label": "test_str_to_bool_true",
+        "kind": 2,
+        "importPath": "tests.test_advanced",
+        "description": "tests.test_advanced",
+        "peekOfCode": "def test_str_to_bool_true(string):\n    assert str_to_bool(string) is True\n@pytest.mark.parametrize(\"string\", ['N', 'n', '0', 'NO'])\ndef test_str_to_bool_false(string):\n    assert str_to_bool(string) is False\ndef str_to_bool(string):\n    if string.lower() in ['yes', 'y', '1']:\n        return True\n    elif string.lower() in ['no', 'n', '0']:\n        return False",
+        "detail": "tests.test_advanced",
+        "documentation": {}
+    },
+    {
+        "label": "test_str_to_bool_false",
+        "kind": 2,
+        "importPath": "tests.test_advanced",
+        "description": "tests.test_advanced",
+        "peekOfCode": "def test_str_to_bool_false(string):\n    assert str_to_bool(string) is False\ndef str_to_bool(string):\n    if string.lower() in ['yes', 'y', '1']:\n        return True\n    elif string.lower() in ['no', 'n', '0']:\n        return False",
+        "detail": "tests.test_advanced",
+        "documentation": {}
+    },
+    {
+        "label": "str_to_bool",
+        "kind": 2,
+        "importPath": "tests.test_advanced",
+        "description": "tests.test_advanced",
+        "peekOfCode": "def str_to_bool(string):\n    if string.lower() in ['yes', 'y', '1']:\n        return True\n    elif string.lower() in ['no', 'n', '0']:\n        return False",
+        "detail": "tests.test_advanced",
+        "documentation": {}
+    },
+    {
+        "label": "tmp_file",
+        "kind": 2,
+        "importPath": "tests.test_clean_request",
+        "description": "tests.test_clean_request",
+        "peekOfCode": "def tmp_file(request):\n    temp = tempfile.NamedTemporaryFile(delete=False)\n    def create():\n        return temp.name\n    def cleanup(): #Ela remove o arquivo temporário após a execução do teste.\n        os.remove(temp.name)\n    temp.close()\n    request.addfinalizer(cleanup)\n    return create\ndef test_tmp_file(tmp_file):",
+        "detail": "tests.test_clean_request",
+        "documentation": {}
+    },
+    {
+        "label": "test_tmp_file",
+        "kind": 2,
+        "importPath": "tests.test_clean_request",
+        "description": "tests.test_clean_request",
+        "peekOfCode": "def test_tmp_file(tmp_file):\n    # Obtém o caminho do arquivo temporário usando o fixture\n    file_path = tmp_file()\n    # Agora você pode realizar suas asserções aqui para testar o comportamento do arquivo temporário\n    assert os.path.exists(file_path)  # Verifica se o arquivo temporário existe\n    assert os.path.isfile(file_path)  # Verifica se o caminho é um arquivo",
+        "detail": "tests.test_clean_request",
+        "documentation": {}
+    },
+    {
+        "label": "tmp_file",
+        "kind": 2,
+        "importPath": "tests.test_escopo_module",
+        "description": "tests.test_escopo_module",
+        "peekOfCode": "def tmp_file():\n    def create(contents):\n        temp = tempfile.NamedTemporaryFile(delete=False)\n        temp.write(contents.encode()) #escreve o conteudo no arquivo temporario\n        temp.flush()  # Força a gravação do conteúdo no arquivo\n        temp.close() # Fecha o arquibo temporario\n        return temp.name\n    yield create # \"yield\" para que a função seja tratada como um gerador\n   # Após o uso do fixture, o arquivo temporário será removido\ndef test_tmp_file(tmp_file):",
+        "detail": "tests.test_escopo_module",
+        "documentation": {}
+    },
+    {
+        "label": "test_tmp_file",
+        "kind": 2,
+        "importPath": "tests.test_escopo_module",
+        "description": "tests.test_escopo_module",
+        "peekOfCode": "def test_tmp_file(tmp_file):\n    # Define o conteúdo a ser escrito no arquivo temporário\n    contents = \"Este é um teste de arquivo temporário.\"\n    # Chama a função do fixture para criar o arquivo temporário\n    path = tmp_file(contents)\n    # Verifica se o arquivo foi criado\n    assert path is not None\n    # Verifica se o conteúdo foi gravado corretamente no arquivo temporário\n    with open(path, 'r', encoding='utf-8') as file:\n        assert file.read() == contents",
+        "detail": "tests.test_escopo_module",
+        "documentation": {}
+    },
+    {
+        "label": "TestAdminCommand",
+        "kind": 6,
+        "importPath": "tests.test_exercise",
+        "description": "tests.test_exercise",
+        "peekOfCode": "class TestAdminCommand:\n    def command(self):\n        return [\"ps\", \"aux\"]\n    def test_no_sudo(self):\n        result = admin_command(self.command(), sudo=False)\n        assert result == self.command()\n    def test_sudo(self):\n        result = admin_command(self.command(), sudo=True)\n        expected = [\"sudo\"] + self.command()\n        assert result == expected",
+        "detail": "tests.test_exercise",
+        "documentation": {}
+    },
+    {
+        "label": "admin_command",
+        "kind": 2,
+        "importPath": "tests.test_exercise",
+        "description": "tests.test_exercise",
+        "peekOfCode": "def admin_command(command, sudo=True): #Aceita um argumento e um argumento de palavra-chave.\n    \"\"\" Prefixe um comando com `sudo` a menos que explicitamente não seja necessário. Espera\n    que `comando` seja uma lista.\"\"\"\n    if not isinstance(command, list):\n        raise TypeError(f'estava esperando que o comando fosse uma lista, mas recebeu um {type(command)}')\n    if sudo:\n        command = [\"sudo\"] + command\n    return command\nclass TestAdminCommand:\n    def command(self):",
+        "detail": "tests.test_exercise",
+        "documentation": {}
+    },
+    {
+        "label": "is_done",
+        "kind": 2,
+        "importPath": "tests.test_files",
+        "description": "tests.test_files",
+        "peekOfCode": "def is_done(path):\n    if not os.path.exists(path):\n        return False\n    with open(path) as _f:\n        contents = _f.read()\n    if \"yes\" in contents.lower():\n        return True\n    elif \"no\" in contents.lower():\n        return False\n# class TestIsDone:",
+        "detail": "tests.test_files",
+        "documentation": {}
+    },
+    {
+        "label": "test_main",
+        "kind": 2,
+        "importPath": "tests.test_main",
+        "description": "tests.test_main",
+        "peekOfCode": "def test_main():\n    assert \"a string value\" == \"a string value\";",
+        "detail": "tests.test_main",
+        "documentation": {}
+    },
+    {
+        "label": "test_os",
+        "kind": 2,
+        "importPath": "tests.test_monkeypatch",
+        "description": "tests.test_monkeypatch",
+        "peekOfCode": "def test_os(monkeypatch):\n    #permite substituir (ou \"patchear\") objetos ou atributos durante os testes.\n    monkeypatch.setattr('os.path.exists', lambda x: False)\n    assert os.path.exists('/') is False\n'''útil para testar o comportamento do código em situações\n    # onde um determinado caminho não existe no sistema de arquivos.'''",
+        "detail": "tests.test_monkeypatch",
+        "documentation": {}
+    },
+    {
+        "label": "test_string_is_digit",
+        "kind": 2,
+        "importPath": "tests.test_params",
+        "description": "tests.test_params",
+        "peekOfCode": "def test_string_is_digit(item):\n    assert item.isdigit()\n@pytest.mark.parametrize(\"item,attribute\",[(\"\", \"format\"),(list(),\"append\")])\ndef test_attributes(item, attribute):\n    assert hasattr(item, attribute)",
+        "detail": "tests.test_params",
+        "documentation": {}
+    },
+    {
+        "label": "test_attributes",
+        "kind": 2,
+        "importPath": "tests.test_params",
+        "description": "tests.test_params",
+        "peekOfCode": "def test_attributes(item, attribute):\n    assert hasattr(item, attribute)",
+        "detail": "tests.test_params",
+        "documentation": {}
+    },
+    {
+        "label": "TestFile",
+        "kind": 6,
+        "importPath": "tests.test_temporary",
+        "description": "tests.test_temporary",
+        "peekOfCode": "class TestFile:\n    # Método de teste que recebe a fixture tmpfile\n    def test_f(self, tmpfile):\n        # Chama a fixture para criar o arquivo temporário e obter o caminho do arquivo\n        path = tmpfile()\n        # Abre o arquivo e lê seu conteúdo\n        with open(path) as _f:\n            contents = _f.read()\n        assert contents == \"1\"",
+        "detail": "tests.test_temporary",
+        "documentation": {}
+    },
+    {
+        "label": "tmpfile",
+        "kind": 2,
+        "importPath": "tests.test_temporary",
+        "description": "tests.test_temporary",
+        "peekOfCode": "def tmpfile(tmpdir):\n    # Função interna que cria e escreve no arquivo temporário\n    def write():\n        # Cria um arquivo chamado 'done' dentro do diretório temporário fornecido pelo tmpdir fixture\n        file = tmpdir.join(\"done\")\n        file.write(\"1\")\n        # Retorna o caminho do arquivo temporário\n        return file.strpath\n    return write\n# Classe de teste para testar a manipulação de arquivos",
+        "detail": "tests.test_temporary",
+        "documentation": {}
+    },
+    {
+        "label": "TestAssertions",
+        "kind": 6,
+        "importPath": "test_assertions",
+        "description": "test_assertions",
+        "peekOfCode": "class TestAssertions(unittest.TestCase):\n    def test_equals(self):\n        self.assertEqual(\"one string\",\"one string\")\nif __name__ =='__main__':\n    unittest.main()",
+        "detail": "test_assertions",
+        "documentation": {}
+    },
+    {
+        "label": "TestStrToBool",
+        "kind": 6,
+        "importPath": "test_exercise",
+        "description": "test_exercise",
+        "peekOfCode": "class TestStrToBool(unittest.TestCase):\n    def test_y_is_true(self):\n        result = str_to_bool('y')\n        self.assertTrue(result);\n    def test_yes_is_true(self):\n        result = str_to_bool('Yes')\n        self.assertTrue(result);\n    def test_invalid_input(self):\n        with self.assertRaises(AttributeError):\n            str_to_bool(1)",
+        "detail": "test_exercise",
+        "documentation": {}
+    },
+    {
+        "label": "str_to_bool",
+        "kind": 2,
+        "importPath": "test_exercise",
+        "description": "test_exercise",
+        "peekOfCode": "def str_to_bool(value):\n    try:\n        value= value.lower()\n    except AttributeError:\n        raise AttributeError(f'{value} deve ser do tipo string')\n    true_values = ['y','yes']\n    false_values = ['no','n']\n    if value in true_values:\n        return True\n    if  value in false_values:",
+        "detail": "test_exercise",
+        "documentation": {}
+    }
+]
